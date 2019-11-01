@@ -42,7 +42,9 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -180,6 +182,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.button4);
             this.groupBox3.Location = new System.Drawing.Point(12, 229);
             this.groupBox3.Name = "groupBox3";
@@ -197,6 +200,15 @@
             this.button4.TabIndex = 5;
             this.button4.Text = "Выгрузить файл расхождений";
             this.button4.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(75, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Расхождения";
             // 
             // button5
             // 
@@ -223,6 +235,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -244,6 +257,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button5;
     }
 }
