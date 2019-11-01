@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -41,8 +42,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -108,6 +109,16 @@
             this.textBox1.TabIndex = 4;
             this.textBox1.Visible = false;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(420, 19);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(102, 86);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "Выполнить сравнение";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -151,6 +162,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.label2);
@@ -177,16 +189,6 @@
             this.groupBox3.Text = "Результаты";
             this.groupBox3.Visible = false;
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(420, 19);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(102, 86);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Выполнить сравнение";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(177, 244);
@@ -195,6 +197,16 @@
             this.button4.TabIndex = 5;
             this.button4.Text = "Выгрузить файл расхождений";
             this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(322, 18);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
@@ -232,6 +244,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
 
