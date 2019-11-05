@@ -93,7 +93,7 @@ namespace Инвентаризатор
 
                         {
 
-
+                            name = l1[0].ToString(),
                             strihKod = l1[2].ToString(),
                             shkaf = l1[4].ToString(),
                             polka = l1[5].ToString(),
@@ -119,9 +119,10 @@ namespace Инвентаризатор
             for (int i = 0; i < strok; i++)
             {
                 str = new FormirList();
-                str.strihKod = mas[i, 0].ToString();
-                str.shkaf = mas[i, 1].ToString();
-                str.polka = mas[i, 2].ToString();
+                str.name = mas[i, 0].ToString();
+                str.strihKod = mas[i, 1].ToString();
+                str.shkaf = mas[i, 2].ToString();
+                str.polka = mas[i, 3].ToString();
                 str.kol_vo = Convert.ToInt32(mas[i, 3]);
                 listExcel.Add(str);
 

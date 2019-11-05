@@ -77,11 +77,13 @@ namespace Инвентаризатор
 
             }
         }
-
+        public string path;
         private void button3_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = true;
-
+            path = Directory.GetCurrentDirectory() + "\\" + DateTime.Now.ToFileTime();
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            dirInfo.Create();
             FormirList List = new FormirList();
             List<FormirList> list1 = List.FormirListExcel(label1.Text);
             List<FormirList> list2 = List.FormirListExcel(label2.Text);
@@ -202,8 +204,8 @@ namespace Инвентаризатор
                 }
                 else
                 {
-                    int ch1 = 0;
-                    int ch2 = 0;
+                    double ch1 = 0;
+                    double ch2 = 0;
 
                     if (leftList[j].kol_vo > leftList[j].kol_vo1)
                     {
@@ -228,10 +230,10 @@ namespace Инвентаризатор
                             int konec = (int)Math.Round(per, 0);
                             doc1.Add(new IdZnach(leftList[j].id1, konec));
                             doc2.Add(new IdZnach(leftList[j].id2, konec));
-                            leftList.Remove(leftList[j]);
+
                             mas1[i] = leftList[j].id1;
                             mas2[i] = leftList[j].id2;
-
+                            leftList.Remove(leftList[j]);
                             j--;
                             i++;
                         }
@@ -303,7 +305,7 @@ namespace Инвентаризатор
 
 
                 }
-                string name = Directory.GetCurrentDirectory() + "\\F3_" + DateTime.Now.ToFileTime() + ".xlsx";
+                string name = path + "\\Присутствуют только в файле 1.xlsx";
                 package.SaveAs(new FileInfo(name));
             }
             using (var package = new ExcelPackage(new FileInfo(Directory.GetCurrentDirectory() + "\\1s.xlsx")))
@@ -321,7 +323,7 @@ namespace Инвентаризатор
 
 
                 }
-                string name = Directory.GetCurrentDirectory() + "\\F3_" + DateTime.Now.ToFileTime() + ".xlsx";
+                string name = path + "\\Присутствуют только в файле 2.xlsx";
                 package.SaveAs(new FileInfo(name));
             }
 
@@ -371,7 +373,7 @@ namespace Инвентаризатор
 
 
                 }
-                string name = Directory.GetCurrentDirectory() + "\\F4_" + DateTime.Now.ToFileTime() + ".xlsx";
+                string name = path + "\\Файл расхождений по полкам и количеству.xlsx";
                 package.SaveAs(new FileInfo(name));
             }
 
@@ -392,7 +394,7 @@ namespace Инвентаризатор
 
 
                 }
-                string name = Directory.GetCurrentDirectory() + "\\F1_" + DateTime.Now.ToFileTime() + ".xlsx";
+                string name = path + "\\Файл коректировки количества 1.xlsx";
                 package.SaveAs(new FileInfo(name));
             }
             using (var package = new ExcelPackage(new FileInfo(label2.Text)))
@@ -407,7 +409,7 @@ namespace Инвентаризатор
 
 
                 }
-                string name = Directory.GetCurrentDirectory() + "\\F2_" + DateTime.Now.ToFileTime() + ".xlsx";
+                string name = path + "\\Файл коректировки количества 2.xlsx";
                 package.SaveAs(new FileInfo(name));
             }
         }

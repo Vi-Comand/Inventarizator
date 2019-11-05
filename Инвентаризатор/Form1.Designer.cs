@@ -104,7 +104,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(151, 82);
+            this.textBox1.Location = new System.Drawing.Point(151, 19);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(70, 20);
             this.textBox1.TabIndex = 4;
@@ -122,43 +122,45 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 85);
+            this.label3.Location = new System.Drawing.Point(6, 22);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(139, 13);
             this.label3.TabIndex = 3;
             this.label3.Text = "Допустимая погрешность";
-            this.label3.Visible = false;
             // 
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(6, 65);
+            this.checkBox3.Location = new System.Drawing.Point(267, 67);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(85, 17);
             this.checkBox3.TabIndex = 2;
             this.checkBox3.Text = "Количество";
             this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.Visible = false;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(6, 42);
+            this.checkBox2.Location = new System.Drawing.Point(267, 44);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(58, 17);
             this.checkBox2.TabIndex = 1;
             this.checkBox2.Text = "Полка";
             this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.Visible = false;
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 19);
+            this.checkBox1.Location = new System.Drawing.Point(267, 21);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(55, 17);
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "Шкаф";
             this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.Visible = false;
             // 
             // groupBox2
             // 
@@ -182,6 +184,7 @@
             this.button5.TabIndex = 6;
             this.button5.Text = "button5";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // openFileDialog1
@@ -222,7 +225,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(546, 521);
+            this.ClientSize = new System.Drawing.Size(546, 230);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
