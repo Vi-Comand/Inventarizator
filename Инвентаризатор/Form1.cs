@@ -1,17 +1,16 @@
 ﻿using OfficeOpenXml;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Excel = Microsoft.Office.Interop.Excel;
-using OfficeOpenXml;
-using System.IO;
 
 namespace Инвентаризатор
 {
@@ -82,25 +81,25 @@ namespace Инвентаризатор
         private void button3_Click(object sender, EventArgs e)
         {
             groupBox3.Visible = true;
-          
+
             FormirList List = new FormirList();
             List<FormirList> list1 = List.FormirListExcel(label1.Text);
             List<FormirList> list2 = List.FormirListExcel(label2.Text);
             Lists op1 = new Lists();
 
-            op1.list1 = list1.Where(x=>x.id1!=0).ToList();
+            op1.list1 = list1.Where(x => x.id1 != 0).ToList();
             op1.list2 = list2.Where(x => x.id1 != 0).ToList();
-            Lists op= NaFullSovpadenie(list1, list2);
-          op= NaOdinnakovoeStrihkodPolka(op.list1,op.list2);
+            Lists op = NaFullSovpadenie(list1, list2);
+            op = NaOdinnakovoeStrihkodPolka(op.list1, op.list2);
 
             op1.doc1 = op.doc1;
             op1.doc2 = op.doc2;
             IzmKolvoVFiles(op1);
             MessageBox.Show("Готово");
-            }
+        }
         private void Excel(string path, List<FormirList> list)
         {
-            
+
             //FileInfo newFile = null;
             /*if (!File.Exists(path + "\\testsheet2.xlsx"))
             newFile = new FileInfo(path + "\\testsheet2.xlsx");
@@ -112,12 +111,13 @@ namespace Инвентаризатор
                 ExcelWorksheet ws = package.Workbook.Worksheets.Add("");
                 int i = 1;
                 foreach (var row in list)
-                { i++;
+                {
+                    i++;
 
-                    ws.Cells[i,1].Value =row.strihKod ;
+                    ws.Cells[i, 1].Value = row.strihKod;
 
                     ws.Cells[i, 1].Style.Font.Color.SetColor(Color.Red);
-                    
+
                 }
 
                 package.Save();
@@ -131,14 +131,15 @@ namespace Инвентаризатор
 
             var leftList =
 (from l1 in list1
- join l2 in list2 on l1.strihKod +"/" + l1.kol_vo equals l2.strihKod + "/" + l2.kol_vo
+ join l2 in list2 on l1.strihKod + "/" + l1.kol_vo equals l2.strihKod + "/" + l2.kol_vo
  select new FormirList
- {id1=l1.id1,
+ {
+     id1 = l1.id1,
      strihKod = (l1 != null ? l1.strihKod : l2.strihKod),
      shkaf = l1.shkaf,
      polka = l1.polka,
      kol_vo = l1.kol_vo,
-     id2= (l2 != null ? l2.id1 : 0),
+     id2 = (l2 != null ? l2.id1 : 0),
      shkaf1 = (l2 != null ? l2.shkaf : null),
      polka1 = (l2 != null ? l2.polka : null),
      kol_vo1 = (l2 != null ? l2.kol_vo : 0)
@@ -167,7 +168,8 @@ namespace Инвентаризатор
 (from l1 in list1
  join l2 in list2 on l1.strihKod + "/" + l1.polka equals l2.strihKod + "/" + l2.polka
  select new FormirList
- { name=l1.name,
+ {
+     name = l1.name,
 
      id1 = l1.id1,
      strihKod = (l1 != null ? l1.strihKod : l2.strihKod),
@@ -189,7 +191,7 @@ namespace Инвентаризатор
             List<IdZnach> doc1 = new List<IdZnach>();
             List<IdZnach> doc2 = new List<IdZnach>();
             //List<FormirList> leftList = leftLis.Where(x => x.id1 != 0).ToList();
-           for(int j=0;j<leftList.Count();j++)
+            for (int j = 0; j < leftList.Count(); j++)
             {
                 if (leftList[j].kol_vo == leftList[j].kol_vo1)
                 {
@@ -229,13 +231,13 @@ namespace Инвентаризатор
                             leftList.Remove(leftList[j]);
                             mas1[i] = leftList[j].id1;
                             mas2[i] = leftList[j].id2;
-                           
+
                             j--;
                             i++;
                         }
                     }
 
-                
+
 
                 }
             }
@@ -245,24 +247,24 @@ namespace Инвентаризатор
 
             var StrihKodKolvoList =
 (from l1 in list1
-join l2 in list2 on l1.strihKod + "/" + l1.kol_vo equals l2.strihKod + "/" + l2.kol_vo
-select new FormirList
-{
-name = l1.name,
+ join l2 in list2 on l1.strihKod + "/" + l1.kol_vo equals l2.strihKod + "/" + l2.kol_vo
+ select new FormirList
+ {
+     name = l1.name,
 
-id1 = l1.id1,
-strihKod = (l1 != null ? l1.strihKod : l2.strihKod),
-shkaf = l1.shkaf,
-polka = l1.polka,
-kol_vo = l1.kol_vo,
-id2 = (l2 != null ? l2.id1 : 0),
-shkaf1 = (l2 != null ? l2.shkaf : null),
-polka1 = (l2 != null ? l2.polka : null),
-kol_vo1 = (l2 != null ? l2.kol_vo : 0)
-}).ToList();
+     id1 = l1.id1,
+     strihKod = (l1 != null ? l1.strihKod : l2.strihKod),
+     shkaf = l1.shkaf,
+     polka = l1.polka,
+     kol_vo = l1.kol_vo,
+     id2 = (l2 != null ? l2.id1 : 0),
+     shkaf1 = (l2 != null ? l2.shkaf : null),
+     polka1 = (l2 != null ? l2.polka : null),
+     kol_vo1 = (l2 != null ? l2.kol_vo : 0)
+ }).ToList();
 
             mas1 = new int[StrihKodKolvoList.Count()];
-         mas2 = new int[StrihKodKolvoList.Count()];
+            mas2 = new int[StrihKodKolvoList.Count()];
 
             for (int j = 0; j < StrihKodKolvoList.Count(); j++)
             {
@@ -278,7 +280,7 @@ kol_vo1 = (l2 != null ? l2.kol_vo : 0)
 
 
             Lists op = new Lists();
-        
+
 
 
 
@@ -286,7 +288,7 @@ kol_vo1 = (l2 != null ? l2.kol_vo : 0)
 
             op.doc1 = doc1;
             op.doc2 = doc2;
-            using (var package = new ExcelPackage(new FileInfo(Directory.GetCurrentDirectory()+"\\1s.xlsx")))
+            using (var package = new ExcelPackage(new FileInfo(Directory.GetCurrentDirectory() + "\\1s.xlsx")))
             {
                 int n_str = 2;
                 var workSheet = package.Workbook.Worksheets[1];
@@ -325,7 +327,7 @@ kol_vo1 = (l2 != null ? l2.kol_vo : 0)
 
 
 
-        
+
             using (var package = new ExcelPackage(new FileInfo(Directory.GetCurrentDirectory() + "\\2s.xlsx")))
             {
                 int n_str = 2;
@@ -343,7 +345,7 @@ kol_vo1 = (l2 != null ? l2.kol_vo : 0)
                     workSheet.Cells[n_str, 8].Value = str.kol_vo;
                     workSheet.Cells[n_str, 9].Value = str.kol_vo1;
                     workSheet.Cells[n_str, 8].Style.Font.Color.SetColor(Color.Red);
-            
+
                     workSheet.Cells[n_str, 9].Style.Font.Color.SetColor(Color.Red);
                     n_str++;
 
@@ -377,20 +379,20 @@ kol_vo1 = (l2 != null ? l2.kol_vo : 0)
         }
         private void IzmKolvoVFiles(Lists op)
         {
-           
+
             using (var package = new ExcelPackage(new FileInfo(label1.Text)))
             {
                 var workSheet = package.Workbook.Worksheets[1];
-                
+
                 foreach (var str in op.doc1)
                 {
-                    
+
                     workSheet.Cells[str.id, 7].Value = str.znach;
 
-                    
-                   
+
+
                 }
-                string name = Directory.GetCurrentDirectory()+"\\F1_" + DateTime.Now.ToFileTime() + ".xlsx";
+                string name = Directory.GetCurrentDirectory() + "\\F1_" + DateTime.Now.ToFileTime() + ".xlsx";
                 package.SaveAs(new FileInfo(name));
             }
             using (var package = new ExcelPackage(new FileInfo(label2.Text)))
@@ -415,22 +417,22 @@ kol_vo1 = (l2 != null ? l2.kol_vo : 0)
 
             var leftList =
             (from l1 in list1
-              join l2 in list2 on l1.strihKod +l1.shkaf+ l1.polka + l1.kol_vo equals l2.strihKod + l2.shkaf + l2.polka + l2.kol_vo
-                select new IdList
- {
-     l1= l1.id1,
-     l2=l2.id1
- }
+             join l2 in list2 on l1.strihKod + l1.shkaf + l1.polka + l1.kol_vo equals l2.strihKod + l2.shkaf + l2.polka + l2.kol_vo
+             select new IdList
+             {
+                 l1 = l1.id1,
+                 l2 = l2.id1
+             }
 
 
 );
-            int[] mas1=new int[leftList.Count()];
-            int[] mas2= new int[leftList.Count()]; 
+            int[] mas1 = new int[leftList.Count()];
+            int[] mas2 = new int[leftList.Count()];
             int i = 0;
             foreach (var row in leftList)
             {
                 mas1[i] = row.l1;
-                 mas2[i] = row.l2;
+                mas2[i] = row.l2;
                 i++;
             }
 
@@ -469,7 +471,7 @@ kol_vo1 = (l2 != null ? l2.kol_vo : 0)
                  //  string[,] mas = List.mas(100000, 4);
                     List < FormirList > Lise=  List.FormirListExcel(@"C:\Users\hozja_d_e\Desktop\100.xlsx");*/
             double a = 3.556666;
-            int C =(int) Math.Round(a,0);
+            int C = (int)Math.Round(a, 0);
         }
     }
 }

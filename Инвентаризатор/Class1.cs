@@ -6,13 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace Инвентаризатор
 {
     class Lists
     {
-        public List<FormirList> list1{ get; set; }
+        public List<FormirList> list1 { get; set; }
         public List<FormirList> list2 { get; set; }
         public List<IdZnach> doc1 { get; set; }
         public List<IdZnach> doc2 { get; set; }
@@ -27,15 +27,16 @@ namespace Инвентаризатор
     }
     class IdZnach
     {
-        public IdZnach(int id,int znach)
-        { this.id = id;
+        public IdZnach(int id, int znach)
+        {
+            this.id = id;
             this.znach = znach;
         }
         public int id { get; set; }
-    public int znach { get; set; }
-}
+        public int znach { get; set; }
+    }
 
-class FormirList
+    class FormirList
     {
 
         public int id1 { get; set; }
@@ -56,7 +57,7 @@ class FormirList
         public string vrem1 { get; set; }
         public string articul1 { get; set; }
         public string kol_vof1 { get; set; }
-        public string itog1{ get; set; }
+        public string itog1 { get; set; }
         //public FormirList(string strihKod,
         //   string shkaf,
         //   string polka,
@@ -70,20 +71,20 @@ class FormirList
         public string[,] mas(int str, int col)
         {
             Random rand = new Random();
-            string[,] mas=new string[str,col];
+            string[,] mas = new string[str, col];
             for (int i = 0; i < str; i++)
-              
-            for (int j = 0; j <col; j++)
+
+                for (int j = 0; j < col; j++)
                 {
                     mas[i, j] = rand.Next(0, 999999).ToString();
-                    }
+                }
             return mas;
         }
 
 
-        public  List<FormirList> FormirListExcel(string path)
+        public List<FormirList> FormirListExcel(string path)
         {
-          
+
             var excel = new ExcelQueryFactory(path);
 
             var info = (from l1 in excel.Worksheet(0)
@@ -96,22 +97,22 @@ class FormirList
                             strihKod = l1[2].ToString(),
                             shkaf = l1[4].ToString(),
                             polka = l1[5].ToString(),
-                            kol_vo = l1[6].ToString() != "" ? Convert.ToInt32(l1[6]):0
+                            kol_vo = l1[6].ToString() != "" ? Convert.ToInt32(l1[6]) : 0
                         }).ToList();
-            
 
-               info = info.Where(x => x.strihKod != "").ToList();
+
+            info = info.Where(x => x.strihKod != "").ToList();
             int i = 2;
             foreach (var str in info)
             {
                 str.id1 = i++;
             }
-                return info;
-            }
+            return info;
+        }
 
 
 
-            public List<FormirList> FormirListExcel(string[,] mas, int strok)
+        public List<FormirList> FormirListExcel(string[,] mas, int strok)
         {
             FormirList str;
             List<FormirList> listExcel = new List<FormirList>();
@@ -130,30 +131,30 @@ class FormirList
         }
 
 
-        public List<FormirList> FormirListExcel(Excel.Worksheet sheet)
-        {
-            FormirList str ;
+        //public List<FormirList> FormirListExcel(Excel.Worksheet sheet)
+        //{
+        //    FormirList str ;
 
 
-            List<FormirList> listExcel = new List<FormirList>();
-            for(int i=2;i<sheet.UsedRange.Rows.Count; i++)
-            {
-                if (sheet.Cells[i, 3].Value != null)
-                {
-                    str = new FormirList();
-                    str.strihKod = sheet.Cells[i, 3].Value.ToString();
-                    str.shkaf = sheet.Cells[i, 5].Value.ToString();
-                    str.polka = sheet.Cells[i, 6].Value.ToString();
-                    str.kol_vo = sheet.Cells[i, 7].Value.ToString();
-                    listExcel.Add(str);
-                }
-                else
-                {
-                    break;
-                }
+        //    List<FormirList> listExcel = new List<FormirList>();
+        //    for(int i=2;i<sheet.UsedRange.Rows.Count; i++)
+        //    {
+        //        if (sheet.Cells[i, 3].Value != null)
+        //        {
+        //            str = new FormirList();
+        //            str.strihKod = sheet.Cells[i, 3].Value.ToString();
+        //            str.shkaf = sheet.Cells[i, 5].Value.ToString();
+        //            str.polka = sheet.Cells[i, 6].Value.ToString();
+        //            str.kol_vo = sheet.Cells[i, 7].Value.ToString();
+        //            listExcel.Add(str);
+        //        }
+        //        else
+        //        {
+        //            break;
+        //        }
 
-            }
-            return listExcel; }
+        //    }
+        //    return listExcel; }
 
     }
 }
