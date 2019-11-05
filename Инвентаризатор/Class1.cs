@@ -91,17 +91,17 @@ class FormirList
                         select new FormirList
 
                         {
-                           
 
-                         strihKod =l1[2].ToString(),
-                         shkaf = l1[4].ToString(),
-                         polka = l1[5].ToString(),
-                         kol_vo = Convert.ToInt32(l1[6])
-        }).ToList();
+
+                            strihKod = l1[2].ToString(),
+                            shkaf = l1[4].ToString(),
+                            polka = l1[5].ToString(),
+                            kol_vo = l1[6].ToString() != "" ? Convert.ToInt32(l1[6]):0
+                        }).ToList();
             
 
                info = info.Where(x => x.strihKod != "").ToList();
-            int i = 1;
+            int i = 2;
             foreach (var str in info)
             {
                 str.id1 = i++;

@@ -88,7 +88,7 @@ namespace Инвентаризатор
             op1.doc1 = op.doc1;
             op1.doc2 = op.doc2;
             IzmKolvoVFiles(op1);
-           
+            MessageBox.Show("Готово");
             }
         private void Excel(string path, List<FormirList> list)
         {
@@ -159,7 +159,8 @@ namespace Инвентаризатор
 (from l1 in list1
  join l2 in list2 on l1.strihKod + "/" + l1.polka equals l2.strihKod + "/" + l2.polka
  select new FormirList
- {
+ { name=l1.name,
+
      id1 = l1.id1,
      strihKod = (l1 != null ? l1.strihKod : l2.strihKod),
      shkaf = l1.shkaf,
@@ -206,6 +207,7 @@ namespace Инвентаризатор
                     }
                     if (ch1 > 0 && ch2 > 0)
                     {
+
                         double per = ch2 / 100;
                         per = (ch1 - ch2) / per;
 
@@ -219,6 +221,8 @@ namespace Инвентаризатор
                             leftList.Remove(leftList[j]);
                             mas1[i] = leftList[j].id1;
                             mas2[i] = leftList[j].id2;
+                           
+                            j--;
                             i++;
                         }
                     }
@@ -229,29 +233,175 @@ namespace Инвентаризатор
             }
             list1.RemoveAll(x => mas1.Contains(x.id1));
             list2.RemoveAll(x => mas2.Contains(x.id1));
+
+
+            var StrihKodKolvoList =
+(from l1 in list1
+join l2 in list2 on l1.strihKod + "/" + l1.kol_vo equals l2.strihKod + "/" + l2.kol_vo
+select new FormirList
+{
+name = l1.name,
+
+id1 = l1.id1,
+strihKod = (l1 != null ? l1.strihKod : l2.strihKod),
+shkaf = l1.shkaf,
+polka = l1.polka,
+kol_vo = l1.kol_vo,
+id2 = (l2 != null ? l2.id1 : 0),
+shkaf1 = (l2 != null ? l2.shkaf : null),
+polka1 = (l2 != null ? l2.polka : null),
+kol_vo1 = (l2 != null ? l2.kol_vo : 0)
+}).ToList();
+
+            mas1 = new int[StrihKodKolvoList.Count()];
+         mas2 = new int[StrihKodKolvoList.Count()];
+
+            for (int j = 0; j < StrihKodKolvoList.Count(); j++)
+            {
+
+                mas1[j] = StrihKodKolvoList[j].id1;
+                mas2[j] = StrihKodKolvoList[j].id2;
+            }
+
+
+            list1.RemoveAll(x => mas1.Contains(x.id1));
+            list2.RemoveAll(x => mas2.Contains(x.id1));
+
+
+
             Lists op = new Lists();
-            op.list1 = list1;
-            op.list2 = list2;
+        
+
+
+
+
+
             op.doc1 = doc1;
             op.doc2 = doc2;
+            using (var package = new ExcelPackage(new FileInfo(Directory.GetCurrentDirectory()+"\\1s.xlsx")))
+            {
+                int n_str = 2;
+                var workSheet = package.Workbook.Worksheets[1];
 
+                foreach (var str in list1)
+                {
+                    workSheet.Cells[n_str, 1].Value = str.id1;
+                    workSheet.Cells[n_str, 2].Value = str.strihKod;
+                    workSheet.Cells[n_str, 3].Value = str.shkaf;
+                    workSheet.Cells[n_str, 4].Value = str.polka;
+                    workSheet.Cells[n_str, 5].Value = str.kol_vo;
+
+
+                }
+                string name = Directory.GetCurrentDirectory() + "\\F3_" + DateTime.Now.ToFileTime() + ".xlsx";
+                package.SaveAs(new FileInfo(name));
+            }
+            using (var package = new ExcelPackage(new FileInfo(Directory.GetCurrentDirectory() + "\\1s.xlsx")))
+            {
+                int n_str = 2;
+                var workSheet = package.Workbook.Worksheets[1];
+
+                foreach (var str in list2)
+                {
+                    workSheet.Cells[n_str, 1].Value = str.id1;
+                    workSheet.Cells[n_str, 2].Value = str.strihKod;
+                    workSheet.Cells[n_str, 3].Value = str.shkaf;
+                    workSheet.Cells[n_str, 4].Value = str.polka;
+                    workSheet.Cells[n_str, 5].Value = str.kol_vo;
+
+
+                }
+                string name = Directory.GetCurrentDirectory() + "\\F3_" + DateTime.Now.ToFileTime() + ".xlsx";
+                package.SaveAs(new FileInfo(name));
+            }
+
+
+
+        
+            using (var package = new ExcelPackage(new FileInfo(Directory.GetCurrentDirectory() + "\\2s.xlsx")))
+            {
+                int n_str = 2;
+                var workSheet = package.Workbook.Worksheets[1];
+
+                foreach (var str in leftList)
+                {
+                    workSheet.Cells[n_str, 1].Value = str.name;
+                    workSheet.Cells[n_str, 2].Value = str.id1;
+                    workSheet.Cells[n_str, 3].Value = str.id2;
+                    workSheet.Cells[n_str, 4].Value = str.strihKod;
+                    workSheet.Cells[n_str, 5].Value = str.shkaf;
+                    workSheet.Cells[n_str, 6].Value = str.polka;
+                    workSheet.Cells[n_str, 7].Value = str.polka1;
+                    workSheet.Cells[n_str, 8].Value = str.kol_vo;
+                    workSheet.Cells[n_str, 9].Value = str.kol_vo1;
+                    workSheet.Cells[n_str, 8].Style.Font.Color.SetColor(Color.Red);
+            
+                    workSheet.Cells[n_str, 9].Style.Font.Color.SetColor(Color.Red);
+                    n_str++;
+
+                }
+                foreach (var str in StrihKodKolvoList)
+                {
+
+
+                    workSheet.Cells[n_str, 1].Value = str.name;
+                    workSheet.Cells[n_str, 2].Value = str.id1;
+                    workSheet.Cells[n_str, 3].Value = str.id2;
+                    workSheet.Cells[n_str, 4].Value = str.strihKod;
+                    workSheet.Cells[n_str, 5].Value = str.shkaf;
+                    workSheet.Cells[n_str, 6].Value = str.polka;
+                    workSheet.Cells[n_str, 6].Style.Font.Color.SetColor(Color.Red);
+                    workSheet.Cells[n_str, 7].Value = str.polka1;
+                    workSheet.Cells[n_str, 7].Style.Font.Color.SetColor(Color.Red);
+                    workSheet.Cells[n_str, 8].Value = str.kol_vo;
+                    workSheet.Cells[n_str, 9].Value = str.kol_vo1;
+                    n_str++;
+
+
+
+
+                }
+                string name = Directory.GetCurrentDirectory() + "\\F4_" + DateTime.Now.ToFileTime() + ".xlsx";
+                package.SaveAs(new FileInfo(name));
+            }
 
             return op;
         }
         private void IzmKolvoVFiles(Lists op)
         {
-            foreach (var str in op.doc1)
+           
+            using (var package = new ExcelPackage(new FileInfo(label1.Text)))
             {
-                var a = op.list1.Where(x => x.id1 == str.id).First();
-                a.kol_vo = str.znach;
-            }
-            foreach (var str in op.doc2)
-            {
-                var a = op.list2.Where(x => x.id1 == str.id).First();
-                a.kol_vo = str.znach;
-            }
+                var workSheet = package.Workbook.Worksheets[1];
+                
+                foreach (var str in op.doc1)
+                {
+                    
+                    workSheet.Cells[str.id, 7].Value = str.znach;
 
+                    
+                   
+                }
+                string name = Directory.GetCurrentDirectory()+"\\F1_" + DateTime.Now.ToFileTime() + ".xlsx";
+                package.SaveAs(new FileInfo(name));
+            }
+            using (var package = new ExcelPackage(new FileInfo(label2.Text)))
+            {
+                var workSheet = package.Workbook.Worksheets[1];
+
+                foreach (var str in op.doc2)
+                {
+
+                    workSheet.Cells[str.id, 7].Value = str.znach;
+
+
+
+                }
+                string name = Directory.GetCurrentDirectory() + "\\F2_" + DateTime.Now.ToFileTime() + ".xlsx";
+                package.SaveAs(new FileInfo(name));
+            }
         }
+
         private Lists NaFullSovpadenie(List<FormirList> list1, List<FormirList> list2)
         {
 
