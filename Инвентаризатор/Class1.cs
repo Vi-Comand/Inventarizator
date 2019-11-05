@@ -14,6 +14,9 @@ namespace Инвентаризатор
     {
         public List<FormirList> list1{ get; set; }
         public List<FormirList> list2 { get; set; }
+        public List<IdZnach> doc1 { get; set; }
+        public List<IdZnach> doc2 { get; set; }
+
     }
 
 
@@ -22,8 +25,17 @@ namespace Инвентаризатор
         public int l1 { get; set; }
         public int l2 { get; set; }
     }
+    class IdZnach
+    {
+        public IdZnach(int id,int znach)
+        { this.id = id;
+            this.znach = znach;
+        }
+        public int id { get; set; }
+    public int znach { get; set; }
+}
 
-        class FormirList
+class FormirList
     {
 
         public int id1 { get; set; }

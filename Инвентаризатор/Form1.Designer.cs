@@ -40,12 +40,11 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -109,7 +108,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(70, 20);
             this.textBox1.TabIndex = 4;
-            this.textBox1.Visible = false;
             // 
             // button3
             // 
@@ -176,6 +174,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Загрузка файлов";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(322, 18);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 6;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.Filter = "Excel|*.xls*";
@@ -192,15 +200,6 @@
             this.groupBox3.Text = "Результаты";
             this.groupBox3.Visible = false;
             // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(177, 244);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(175, 30);
-            this.button4.TabIndex = 5;
-            this.button4.Text = "Выгрузить файл расхождений";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -210,15 +209,14 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Расхождения";
             // 
-            // button5
+            // button4
             // 
-            this.button5.Location = new System.Drawing.Point(322, 18);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 6;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button4.Location = new System.Drawing.Point(177, 244);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(175, 30);
+            this.button4.TabIndex = 5;
+            this.button4.Text = "Выгрузить файл расхождений";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
