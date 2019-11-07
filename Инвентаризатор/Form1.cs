@@ -199,8 +199,10 @@ namespace Инвентаризатор
                 {
                     mas1[i] = leftList[j].id1;
                     mas2[i] = leftList[j].id2;
-                    i++;
+                 
                     leftList.Remove(leftList[j]);
+                    i++;
+                    j--;
                 }
                 else
                 {
@@ -237,6 +239,13 @@ namespace Инвентаризатор
                             j--;
                             i++;
                         }
+                        else
+                        {
+                            mas1[i] = leftList[j].id1;
+                            mas2[i] = leftList[j].id2;
+                            i++;
+                        }
+
                     }
 
 
@@ -281,6 +290,42 @@ namespace Инвентаризатор
 
 
 
+
+            var StrihKod =
+(from l1 in list1
+join l2 in list2 on l1.strihKod equals l2.strihKod
+select new FormirList
+{
+name = l1.name,
+
+id1 = l1.id1,
+strihKod = (l1 != null ? l1.strihKod : l2.strihKod),
+shkaf = l1.shkaf,
+polka = l1.polka,
+kol_vo = l1.kol_vo,
+id2 = (l2 != null ? l2.id1 : 0),
+shkaf1 = (l2 != null ? l2.shkaf : null),
+polka1 = (l2 != null ? l2.polka : null),
+kol_vo1 = (l2 != null ? l2.kol_vo : 0)
+}).ToList();
+
+            mas1 = new int[StrihKod.Count()];
+            mas2 = new int[StrihKod.Count()];
+
+            for (int j = 0; j < StrihKod.Count(); j++)
+            {
+
+                mas1[j] = StrihKod[j].id1;
+                mas2[j] = StrihKod[j].id2;
+            }
+
+
+            list1.RemoveAll(x => mas1.Contains(x.id1));
+            list2.RemoveAll(x => mas2.Contains(x.id1));
+
+
+
+
             Lists op = new Lists();
 
 
@@ -302,7 +347,7 @@ namespace Инвентаризатор
                     workSheet.Cells[n_str, 3].Value = str.shkaf;
                     workSheet.Cells[n_str, 4].Value = str.polka;
                     workSheet.Cells[n_str, 5].Value = str.kol_vo;
-
+                    n_str++;
 
                 }
                 string name = path + "\\Присутствуют только в файле 1.xlsx";
@@ -320,7 +365,7 @@ namespace Инвентаризатор
                     workSheet.Cells[n_str, 3].Value = str.shkaf;
                     workSheet.Cells[n_str, 4].Value = str.polka;
                     workSheet.Cells[n_str, 5].Value = str.kol_vo;
-
+                    n_str++;
 
                 }
                 string name = path + "\\Присутствуют только в файле 2.xlsx";
@@ -373,14 +418,39 @@ namespace Инвентаризатор
 
 
                 }
+                foreach (var str in StrihKod)
+                {
+
+
+                    workSheet.Cells[n_str, 1].Value = str.name;
+                    workSheet.Cells[n_str, 2].Value = str.id1;
+                    workSheet.Cells[n_str, 3].Value = str.id2;
+                    workSheet.Cells[n_str, 4].Value = str.strihKod;
+                    workSheet.Cells[n_str, 5].Value = str.shkaf;
+                    workSheet.Cells[n_str, 6].Value = str.polka;
+                    workSheet.Cells[n_str, 6].Style.Font.Color.SetColor(Color.Red);
+                    workSheet.Cells[n_str, 7].Value = str.polka1;
+                    workSheet.Cells[n_str, 7].Style.Font.Color.SetColor(Color.Red);
+                    workSheet.Cells[n_str, 8].Value = str.kol_vo;
+                    workSheet.Cells[n_str, 9].Value = str.kol_vo1;
+                    workSheet.Cells[n_str, 8].Style.Font.Color.SetColor(Color.Red);
+                    workSheet.Cells[n_str, 9].Style.Font.Color.SetColor(Color.Red);
+                    n_str++;
+
+
+
+
+                }
                 string name = path + "\\Файл расхождений по полкам и количеству.xlsx";
                 package.SaveAs(new FileInfo(name));
+               
             }
-
+            label4.Text = "Количество расхождений по полкам: " + (StrihKodKolvoList.Count() + StrihKod.Count()) + "\n Расхождение по количеству: " + (leftList.Count() + StrihKod.Count());
             return op;
         }
         private void IzmKolvoVFiles(Lists op)
         {
+            label4.Text = label4.Text + "\n Количиство корректировок в документах: " + op.doc1.Count();
 
             using (var package = new ExcelPackage(new FileInfo(label1.Text)))
             {
@@ -425,23 +495,41 @@ namespace Инвентаризатор
                  l1 = l1.id1,
                  l2 = l2.id1
              }
-
+             
 
 );
-            int[] mas1 = new int[leftList.Count()];
-            int[] mas2 = new int[leftList.Count()];
-            int i = 0;
-            foreach (var row in leftList)
+
+            int kol  = leftList.Count();
+
+
+            while (leftList.Count() > 0)
             {
-                mas1[i] = row.l1;
-                mas2[i] = row.l2;
-                i++;
+                kol = leftList.Count();
+
+                List<IdList> tis = leftList.Take(100000).ToList();
+                // int i = 0;
+
+                int[] mas1 = new int[100000];
+                int[] mas2 = new int[100000];
+                int i = 0;
+                while (tis.Count()>0)
+                {
+                    mas1[i] = tis[0].l1;
+                    mas2[i] = tis[0].l2;
+                    tis.Remove(tis[0]);
+                    i++;
+                }
+
+                list1.RemoveAll(x => mas1.Contains(x.id1));
+                list2.RemoveAll(x => mas2.Contains(x.id1));
             }
+           
+          
 
             Lists op = new Lists();
 
-            list1.RemoveAll(x => mas1.Contains(x.id1));
-            list2.RemoveAll(x => mas2.Contains(x.id1));
+          //  list1.RemoveAll(x => mas1.Contains(x.id1));
+          //  list2.RemoveAll(x => mas2.Contains(x.id1));
             op.list1 = list1;
             op.list2 = list2;
             /* var leftList =
